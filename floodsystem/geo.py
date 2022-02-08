@@ -8,7 +8,7 @@ geographical data.
 
 from os import stat
 from haversine import haversine, Unit
-from .utils import sorted_by_key
+from utils import sorted_by_key
 """This module contains a collection of functions related to
 geographical data.
 
