@@ -2,8 +2,7 @@ from floodsystem.geo import stations_by_distance
 from floodsystem.stationdata import build_station_list
 
 def test_stations_by_distance():
-
-     # Build list of stations
+    """Test for Task 1B"""
     stations = build_station_list()
     p=[52.2053, 0.1218]
     distance=stations_by_distance(stations,p)
