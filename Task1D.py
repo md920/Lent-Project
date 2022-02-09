@@ -8,7 +8,6 @@ print(len(rivers), "stations.", "First 10 -", rivers[:10], "\n")
 
 stats_by_river = stations_by_river(stations)
 stats1 = stats_by_river['River Aire']
-print(stats1)
 for i in range(len(stats1)):
     stats1[i] = stats1[i].name
 print(sorted(stats1), "\n")
