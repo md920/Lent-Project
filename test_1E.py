@@ -10,4 +10,4 @@ def test_river_by_station_number():
     i = 0
     for i in range(len(tuple_list)-1):
         assert tuple_list[i][1] >= tuple_list[i+1][1]
-        assert len(tuple_list) == 60
+        assert len(tuple_list) == 50
