@@ -16,14 +16,16 @@ geographical data.
 
 
 def stations_by_distance(stations, p):
+    """Requirement for Task 1B"""
     dist_stat = []
-    for stat in stations:
-        dist_stat.append((stat, haversine(stat.coord, p),))
+    for s in stations:
+        dist_stat.append((s, haversine(s.coord, p),))
     result = sorted_by_key(dist_stat, 1)
     return result
 
 
 def stations_within_radius(stations, centre, r):
+    """Requirement for Task 1C"""
     stat_dist = stations_by_distance(stations, centre)
     stats_in_rad = []
     for elem in stat_dist:
@@ -33,6 +35,7 @@ def stations_within_radius(stations, centre, r):
 
 
 def rivers_with_station(stations):
+    """Requirement for Task 1D"""
     rivers_sts = set([])
     for stat in stations:
         rivers_sts.add(stat.river)
@@ -40,6 +43,7 @@ def rivers_with_station(stations):
 
 
 def stations_by_river(stations):
+    """Requirement for Task 1D"""
     river_stations = {}
     rivers = rivers_with_station(stations)
     for r in rivers:
@@ -52,6 +56,7 @@ def stations_by_river(stations):
 
 
 def rivers_by_station_number(stations, N):
+    """Requirement for Task 1E"""
     rivers = rivers_with_station(stations)
     stat_riv = stations_by_river(stations)
     riv_num = []
