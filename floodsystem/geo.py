@@ -17,18 +17,18 @@ geographical data.
 
 def stations_by_distance(stations, p):
     """Requirement for Task 1B"""
-    dist_stat = []
+    distance_s = []
     for s in stations:
-        dist_stat.append((s, haversine(s.coord, p),))
-    result = sorted_by_key(dist_stat, 1)
+        distance_s.append((s, haversine(s.coord, p),))
+    result = sorted_by_key(distance_s, 1)
     return result
 
 
 def stations_within_radius(stations, centre, r):
     """Requirement for Task 1C"""
-    stat_dist = stations_by_distance(stations, centre)
+    s_dist = stations_by_distance(stations, centre)
     stats_in_rad = []
-    for elem in stat_dist:
+    for elem in s_dist:
         if elem[1] < r:
             stats_in_rad.append(elem[0])
     return stats_in_rad
