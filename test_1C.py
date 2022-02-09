@@ -4,6 +4,8 @@ from floodsystem.geo import stations_within_radius
 """Test for Task 1C"""
 stations=build_station_list()
 centre=[52.2053,0.1218]
-r = 1 #radius
+r = 10 #radius
 station_in_radius=stations_within_radius(stations,centre, r)
-assert station_in_radius==['Cambridge Jesus Lock']
+assert station_in_radius==['Bin Brook', 'Cambridge Baits Bite', "Cambridge Byron's Pool",
+ 'Cambridge Jesus Lock', 'Comberton', 'Dernford', 'Girton',
+ 'Haslingfield Burnt Mill', 'Lode', 'Oakington', 'Stapleford']
