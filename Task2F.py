@@ -8,7 +8,7 @@ def run():
     
     stations = build_station_list()
     update_water_levels(stations)   
-    N = 5
+    N = 6
     DT = 10
     P = 10
     
