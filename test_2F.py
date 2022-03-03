@@ -1,16 +1,14 @@
 from floodsystem.analysis import *
-import datetime
-from dateutil.parser import parse
-from matplotlib.dates import date2num
+from datetime import datetime
+import numpy as np
 
-def test_poltfit():
-
-    dates = [parse("01/01/15"),parse("01/02/15"),parse("01/03/15"),\
-        parse("01/04/15"),parse("01/05/15"),parse("01/06/15")]
-
-    levels = [0,1,2,3,4,5]
-
-    assert 1-(polyfit(dates,levels,1))[0][1] < 0.000001
-
-
-
+def test_polyfit():
+    assert polyfit([],[0.314], 3) == None
+    assert polyfit([datetime(2022,1,15,12,13,14)],[], 3) == None
+    assert polyfit(5,[0.314], 3) == None
+    assert polyfit([datetime(2022,1,15,12,13,14)],5, 3) == None
+    assert polyfit([5],[0.314], 3) == None
+    assert polyfit([datetime(2022,1,15,12,13,14)],["hello"], 3) == None
+    assert polyfit([datetime(2022,1,15,12,13,14)],[0.314], 0) == None
+    assert polyfit([datetime(2022,1,15,12,13,14)],[0.314], 1.5) == None
+    assert polyfit([datetime(2022,1,15,12,13,14), datetime(2022,1,15,12,13,15)],[0.314, 0.315], 1) != None
