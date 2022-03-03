@@ -39,29 +39,51 @@ class MonitoringStation:
         d += "   typical range: {}".format(self.typical_range)
         return d
 
-
-
-
     def typical_range_consistent(self):
-        if self.typical_range == None:
+        """Check that stations have consistent data:
+            1) data is available
+            2) reported high range > low range
+        """
+        # Check that data exists
+        if not self.typical_range:
             return False
-        elif self.typical_range[1] < self.typical_range[0]:
-            return False
+
+        # Check that data is tuple of len 2
+        if type(self.typical_range) is tuple:
+            if len(self.typical_range) != 2:
+                return False
         else:
-            return True
+            return False
+
+        # Check that max > min
+        low, high = self.typical_range
+        if low > high:
+            return False
+        
+        # Data is consistent, return True
+        return True
 
     def relative_water_level(self):
-        try:
-            difference = self.typical_range[1]- self.typical_range[0]
-            return((self.latest_level - self.typical_range[0])/difference)
-        except:
-            return(None)
+        """Returns the latest water level as a fraction of the typical range
+        """
+        
+        # Check data consistent
+        if not self.typical_range_consistent():
+            return None
+        if self.latest_level == None:
+            return self.latest_level
+       
+        low, high = self.typical_range
+
+        return (self.latest_level-low) / (high - low)
+
+
 
 
 def inconsistent_typical_range_stations(stations):
-    inconStat = []
-    for stat in stations:
-        if stat.typical_range_consistent() == False:
-            inconStat.append(stat.name)
-    return inconStat
-    
+    """Returns list of stations with inconsistent data"""
+
+    # List of stations IF data is inconsistent
+    i_stations = [station for station in stations if not station.typical_range_consistent()]
+
+    return i_stations

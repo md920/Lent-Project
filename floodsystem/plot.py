@@ -1,48 +1,69 @@
 import matplotlib
 import matplotlib.pyplot as plt
-from datetime import datetime, timedelta
+import numpy as np
 from .analysis import polyfit
-def plot_water_levels(station, dates, levels):
+from datetime import datetime
+from floodsystem.station import MonitoringStation
 
-# Plot
+def plot_water_levels(station, dates, levels):
+    """Plots the level of water at a given station vs date"""
+    # Check data consistency
+    if not isinstance(dates, list):
+        return None
+    if not isinstance(levels, list):
+        return None
+    if len(dates) == 0 or len(levels) == 0:
+        return None
+    if not isinstance(dates[0], datetime):
+        return None
+    if not isinstance(levels[0], float):
+        return None
+    if not isinstance(station, MonitoringStation):
+        return None
+
     plt.plot(dates, levels)
-    typical_high=station.typical_range[1]
-    typical_low=station.typical_range[0]
-    high=[]
-    low=[]
-    length_dates=len(dates)
-    for i in range (length_dates):
-        high.append(typical_high)
-        low.append(typical_low)
-    plt.plot(dates, high)
-    plt.plot(dates, low)
-# Add axis labels, rotate date labels and add plot title
-    plt.xlabel('date')
-    plt.ylabel('water level (m)')
+
+    plt.xlabel("Date")
+    plt.ylabel("Water Level / m")
     plt.xticks(rotation=45)
     plt.title(station.name)
-    
-# Display plot
-    plt.tight_layout()  # This makes sure plot does not cut off date labels
 
+    plt.tight_layout()
     plt.show()
 
 def plot_water_level_with_fit(station, dates, levels, p):
-    poly, d0 =polyfit(dates,levels,p)
-    typical_high=station.typical_range[1]
-    typical_low=station.typical_range[0]
-    high=[]
-    low=[]
-    length_dates=len(dates)
-    for i in range (length_dates):
-        high.append(typical_high)
-        low.append(typical_low)
-    plt.plot(dates, high)
-    plt.plot(dates, low)
-    plt.plot(matplotlib.dates.date2num(dates),levels)
-    plt.plot (dates, poly(matplotlib.dates.date2num(dates)-d0))
-    plt.xlabel('date')
-    plt.ylabel('water level (m)')
-    plt.xticks(rotation=45);
+    """Plots the level of water at a given station along with the fitting function vs date"""
+    # Check data consistency
+    if not isinstance(dates, list):
+        return None
+    if not isinstance(levels, list):
+        return None
+    if len(dates) == 0 or len(levels) == 0:
+        return None
+    if not isinstance(dates[0], datetime):
+        return None
+    if not isinstance(levels[0], float):
+        return None
+    if not isinstance(station, MonitoringStation):
+        return None
+    if not isinstance(p, int):
+        return None
+    if p < 0:
+        return None
+    
+    plt.plot(dates, levels)
+
+    poly, d0 = polyfit(dates, levels, p)
+    float_dates = matplotlib.dates.date2num(dates)
+    x1 = np.linspace(float_dates[0], float_dates[-1], 30)
+    plt.plot(x1, poly(x1-d0))  
+
+    plt.xlabel("Date")
+    plt.ylabel("Water Level / m")
+    plt.xticks(rotation=45)
     plt.title(station.name)
+
+    plt.hlines(station.typical_range, xmin=x1[0], xmax=x1[-1])
+
+    plt.tight_layout()
     plt.show()
