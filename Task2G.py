@@ -16,7 +16,7 @@ def run():
 
     for station in stations[-10:]:
         if station.town is not None:
-            print(town_risk_assessment(stations, station.town))
+            print(town_risk_assessment(stations, station.town), station.town)
 
 
 if __name__ == "__main__":
